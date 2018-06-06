@@ -51,29 +51,16 @@ class Artist
   end
 
   def self.delete_all()
-    sql = "DELETE from artists"
+    sql = "DELETE FROM artists"
     deleted_artists = SqlRunner.run(sql)
   end
 
+  def self.find_by_id(id)
+    sql = "SELECT * FROM artists WHERE id = $1"
+    values = [id]
+    artist = SqlRunner.run(sql, values)
+    return artist.map {|artist| Artist.new(artist) }
 
+  end
 
-
-
-
-# #
-#   def self.delete_all()
-#     db = PG.connect({ dbname: 'pizza_shop', host: 'localhost' })
-#     sql = "DELETE FROM pizza_orders"
-#     db.prepare("delete_all", sql)
-#     db.exec_prepared("delete_all")
-#     db.close()
-#   end
-#
-#   def customer()
-#     sql = "SELECT * FROM customers WHERE id = $1"
-#     values = [@customer_id]
-#     customers = SqlRunner.run(sql, values).first
-#     return Customer.new(customer)
-#   end
-#
- end
+end

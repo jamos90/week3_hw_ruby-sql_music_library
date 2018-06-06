@@ -35,6 +35,7 @@ class Album
     artists = SqlRunner.run(sql, values)
     return artists.map{|artist| Artist.new(artist)}
   end
+
   def update()
     sql = "UPDATE albums SET album_name = $1 WHERE id =$2"
     values = [@album_name, @id]
@@ -58,22 +59,13 @@ class Album
     deleted_albums = SqlRunner.run(sql)
   end
 
+  def self.find_by_id(id)
+    sql = "SELECT * FROM albums WHERE id = $1"
+    values = [id]
+    album = SqlRunner.run(sql, values)
+    return album.map {|album| Album.new(album)}
+
+  end
+
 
 end
-
-
-  #
-  # def self.delete_all()
-  #   db = PG.connect({ dbname: 'pizza_shop', host: 'localhost' })
-  #   sql = "DELETE FROM pizza_orders"
-  #   db.prepare("delete_all", sql)
-  #   db.exec_prepared("delete_all")
-  #   db.close()
-  # end
-  #
-  # def customer()
-  #   sql = "SELECT * FROM customers WHERE id = $1"
-  #   values = [@customer_id]
-  #   customers = SqlRunner.run(sql, values).first
-  #   return Customer.new(customer)
-  # end
