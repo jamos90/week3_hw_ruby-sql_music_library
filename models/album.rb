@@ -39,12 +39,12 @@ class Album
   def self.all()
     sql = "SELECT * FROM albums"
     albums = SqlRunner.run(sql)
-    return albums.map {|albums| Album.new(albums) }
+    return albums.map {|album| Album.new(album) }
   end
 
   def self.delete_all()
     sql = "DELETE from albums"
-    deleted_artists = SqlRunner.run(sql)
+    deleted_albums = SqlRunner.run(sql)
   end
 
 
